@@ -1,27 +1,87 @@
+/* Color scheme:
+#FF99CC
+#F77FBE
+#4C454C
+#000000
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   text-align: center;
-  background-color: #011F3F;
+}
+
+header {
+  background-color: #000000;
+  padding: 2rem 0;
+}
+
+main {
+  background-color: #FF99CC;
+}
+
+footer {
+  font-family: Montserrat, sans-serif;
+  color: #FF99CC;
+  background-color: #000000;
+  padding: 2rem 0;
+}
+
+#bgm {
+  border: 1px solid #FF99CC;
+  border-radius: 50%;
+  background-color: #FF99CC;
+  cursor: pointer;
+  transition: transform 0.5s; /* Apply the transition */
+}
+
+#bgm.flipped {
+  transform: rotateY(360deg); /* Rotate button when flipped */
+}
+
+#bgm img {
+  padding: 0.5rem;
+  height: 3rem;
+}
+
+h1 {
+  font-size: 6rem;
+  color: #FF99CC;
+  font-family: 'Pacifico', cursive;
+  font-weight: bold;
+  text-shadow: 5px 0 #F77FBE;
 }
 
 #level-title {
-  font-family: 'Press Start 2P', cursive;
+  color: #000000;
+  font-family: 'Permanent Marker', cursive;
   font-size: 3rem;
-  margin:  5%;
-  color: #FEF2BF;
+  margin: 0;
 }
 
 .container {
   display: block;
-  width: 50%;
+  width: 40%;
   margin: auto;
 }
 
 .btn {
-  margin: 25px;
+  margin: 2rem;
   display: inline-block;
   height: 200px;
   width: 200px;
   border: 10px solid black;
+  border-radius: 20%;
+  cursor: pointer;
+}
+
+.btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 20%;
 }
 
@@ -30,23 +90,7 @@ body {
   opacity: 0.8;
 }
 
-.red {
-  background-color: red;
-}
-
-.green {
-  background-color: green;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.yellow {
-  background-color: yellow;
-}
-
 .pressed {
   box-shadow: 0 0 20px white;
-  background-color: grey;
+  background-color: #F77FBE;
 }
