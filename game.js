@@ -7,6 +7,23 @@ let level = 0;
 
 $(document).ready(function() {
     console.log("doc ready");
+    $("h1").addClass("h1-flash");
+    setTimeout(function() {
+        $("h1").removeClass("h1-flash");
+        $("#bgm").toggleClass("flipped");
+    }, 1000);
+    setTimeout(function() {
+        $("h3").css({
+            transform: 'translateX(0)',
+            opacity: 1
+            });
+    }, 1000);
+    setTimeout(function() {
+        $("#level-title").css({
+            transform: 'translateY(0)',
+            opacity: 1
+          });
+    }, 1500);
     const bgm = new Audio("assets/sounds/acoustic.mp3");
     bgm.loop = true;
     $("#bgm").click(function() {
@@ -24,12 +41,15 @@ $(document).ready(function() {
         $(this).blur();
     });
     $(document).on("keydown", function(event) {
-        if (event.key === " ")
+        if (event.key === " " && level === 0) {
             if (!gameStarted) {
-                $("#level-title").text("Level " + level);
+                $("#level-title").text("Let's go!");
+                setTimeout(function() {
+                    nextSequence();
+                }, 1000)
                 gameStarted = true;
-                nextSequence();
             }
+        }
     });
     $(".btn").on("click", function() {
         const clickedColor = $(this).attr("id");
@@ -46,6 +66,24 @@ $(document).ready(function() {
       });
 });
 
+function nextSequence() {
+    clickedPattern = [];
+    level++;
+    const randomNumber = Math.floor(Math.random() * 4);
+    const randomButton = buttonColors[randomNumber];
+    gamePattern.push(randomButton);
+    $("#level-title").text("Level " + level);
+    setTimeout(function() {
+        $("#" + randomButton).fadeIn(100).fadeOut(100).fadeIn(100);
+        playSound(randomButton);
+    }, 500)
+};
+
+function playSound(name) {
+    const audio = new Audio("assets/sounds/" + name + ".mp3");
+    audio.play();
+};
+
 // Checks index and length of every color within two patterns and starts next round or game over
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
@@ -54,8 +92,10 @@ function checkAnswer(currentLevel) {
             const next = new Audio("assets/sounds/next.mp3");
             next.play();
             setTimeout(function() {
-                nextSequence();
-            }, 2000)
+                if (gameStarted) {
+                    nextSequence();
+                }
+            }, 1500)
             console.log("Next round")
         }
     }
@@ -64,57 +104,39 @@ function checkAnswer(currentLevel) {
 
         switch (true) {
             case level > 15:
-                message = "Game over. Hmm...do you have a photographic memory?";
+                message = "Game over. <br>Hmm...I'm pretty sure you have a photographic memory, calling the FBI...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)";
                 break;
             case level > 10:
-                message = "Game over. Your memory is as good as an elephant!";
+                message = "Game over. <br>You are a magnificent unicorn, glistening in the morning sun!";
                 break;
             case level > 6:
-                message = "Game over. Pretty impressive!";
+                message = "Game over. <br>...but Wow! You were amazing!";
                 break;
             case level > 3:
-                message = "Game over. Not bad!";
+                message = "Game over. <br>Not bad, but we can do even better!";
                 break;
             default:
-                message = "Game over. Try again!";
+                message = "Game over. <br>Let's give it another shot!";
         }
         const wrong = new Audio("assets/sounds/uh-oh.mp3");
         wrong.play();
+        gameStarted = false;
         $("body").addClass("game-over");
         setTimeout(function() {
             $("body").removeClass("game-over");
         }, 200);
-        $("h2").text(message);
+        $("h2").html(message);
         restart();
     }
 };
 
 function restart() {
     setTimeout(function() {
-        $("h2").text("Press Space Bar To Start");
-        gameStarted = false;
+        $("h2").text("Press Space Bar To Begin");
         gamePattern = [];
         level = 0;
-        }, 2000);
+        }, 3000);
 }
-
-function nextSequence() {
-    clickedPattern = [];
-    level++;
-    $("#level-title").text("Level " + level);
-    const randomNumber = Math.floor(Math.random() * 4);
-    const randomButton = buttonColors[randomNumber];
-    gamePattern.push(randomButton);
-    setTimeout(function() {
-        $("#" + randomButton).fadeIn(100).fadeOut(100).fadeIn(100);
-        playSound(randomButton);
-    }, 1000)
-};
-
-function playSound(name) {
-    const audio = new Audio("assets/sounds/" + name + ".mp3");
-    audio.play();
-};
 
 function animatePress(currentColor) {
     $("#" + currentColor).addClass("pressed");

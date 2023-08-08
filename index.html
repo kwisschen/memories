@@ -3,25 +3,28 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Memories</title>
+  <title>The Memories Game</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Pacifico&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Pacifico&family=Hachi+Maru+Pop&family=Architects+Daughter&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <header>
-    <div class="container">
+  <header id="header">
+    <div class="header-container">
+      <video autoplay loop muted>
+        <source src="assets/videos/pink-smoke-720p.mp4" type="video/mp4">
+      </video>
       <h1>Memories</h1>
       <button id="bgm"><img src="./assets/images/music-on.png" alt="turn on music pic"></button>
     </div>
   </header>
-  <main>
-    <h2 id="level-title">Press Space Bar To Start</h1>
+  <main id="main">
+    <h3>a game inspired by the classic 'Simon Says'</h3>
+    <h2 id="level-title">Press Space Bar To Begin</h1>
     <div class="container">
       <div class="row">
-
         <div type="button" id="green" class="btn green">
           <img src="assets/images/phone.jpeg" alt="neon green phone">
         </div>
@@ -30,21 +33,17 @@
           <img src="assets/images/lips.jpeg" alt="neon red lips">
         </div>
       </div>
-
       <div class="row">
-
         <div type="button" id="yellow" class="btn yellow">
           <img src="assets/images/cake.jpg" alt="neon yellow cake">
         </div>
         <div type="button" id="blue" class="btn blue">
           <img src="assets/images/cat.jpg" alt="neon blue cat">
         </div>
-
       </div>
-
     </div>
   </main>
-  <footer>
+  <footer id="footer">
     Copyright © Christopher Chen
   </footer>
 
