@@ -6,8 +6,6 @@ let bgmStarted = false;
 let lastTapTime = 0;
 let level = 0;
 
-
-
 $(document).ready(function() {
     console.log("doc ready");
     $("h1").addClass("h1-flash");
@@ -42,6 +40,17 @@ $(document).ready(function() {
             $("#bgm").html("<img src='assets/images/music-on.png' alt='turn on music'>");
         }
         $(this).blur();
+    });
+    $(document).on("keydown", function(event) {
+        if (event.key === " " && level === 0) {
+            if (!gameStarted) {
+                $("#level-title").text("Let's go!");
+                setTimeout(function() {
+                    nextSequence();
+                }, 1000)
+                gameStarted = true;
+            }
+        }
     });
     $(document).on("touchstart", function(event) {
         const currentTime = new Date().getTime();
@@ -120,7 +129,7 @@ function checkAnswer(currentLevel) {
                 message = "Game over. <br>...but Wow! You were amazing!";
                 break;
             case level > 3:
-                message = "Game over. <br>Not bad, but we can do even better!";
+                message = "Game over. <br>Not bad at all, but we can do even better!";
                 break;
             default:
                 message = "Game over. <br>Let's give it another shot!";
