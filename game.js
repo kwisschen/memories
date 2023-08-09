@@ -3,7 +3,10 @@ let gamePattern = [];
 let clickedPattern = [];
 let gameStarted = false;
 let bgmStarted = false;
+let lastTapTime = 0;
 let level = 0;
+
+
 
 $(document).ready(function() {
     console.log("doc ready");
@@ -40,9 +43,12 @@ $(document).ready(function() {
         }
         $(this).blur();
     });
-    $(document).on("keydown touchstart", function(event) {
-        if ((event.key === " " || event.type === "touchstart") && level === 0) {
-            if (!gameStarted) {
+    $(document).on("touchstart", function(event) {
+        const currentTime = new Date().getTime();
+        const timeSinceLastTap = currentTime - lastTapTime;
+
+        if (timeSinceLastTap < 300) {
+            if (!gameStarted && level === 0) {
                 $("#level-title").text("Let's go!");
                 setTimeout(function() {
                     nextSequence();
@@ -50,6 +56,7 @@ $(document).ready(function() {
                 gameStarted = true;
             }
         }
+        lastTapTime = currentTime;
     });
     $(".btn").on("click", function() {
         const clickedColor = $(this).attr("id");
@@ -132,11 +139,11 @@ function checkAnswer(currentLevel) {
 
 function restart() {
     setTimeout(function() {
-        $("h2").text("Press Space Bar To Begin");
+        $("h2").text("Press Space Bar or Double-Tap To Begin");
         gamePattern = [];
         level = 0;
         }, 3000);
-}
+};
 
 function animatePress(currentColor) {
     $("#" + currentColor).addClass("pressed");
