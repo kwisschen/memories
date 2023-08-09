@@ -41,7 +41,7 @@ $(document).ready(function() {
         $(this).blur();
     });
     $(document).on("keydown", function(event) {
-        if (event.key === " " && level === 0) {
+        if ((event.key === " " || event.type === "touchstart") && level === 0) {
             if (!gameStarted) {
                 $("#level-title").text("Let's go!");
                 setTimeout(function() {
