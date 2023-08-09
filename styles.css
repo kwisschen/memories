@@ -151,6 +151,11 @@ h3 {
   background-color: #F77FBE;
 }
 
+#chris {
+  text-decoration: none;
+  color: #FF99CC;
+}
+
 @media (max-width: 768px) {
   h1 {
     font-size: 5rem;

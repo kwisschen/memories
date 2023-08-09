@@ -40,7 +40,7 @@ $(document).ready(function() {
         }
         $(this).blur();
     });
-    $(document).on("keydown", function(event) {
+    $(document).on("keydown touchstart", function(event) {
         if ((event.key === " " || event.type === "touchstart") && level === 0) {
             if (!gameStarted) {
                 $("#level-title").text("Let's go!");
