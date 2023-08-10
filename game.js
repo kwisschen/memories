@@ -82,6 +82,18 @@ $(document).ready(function() {
       });
 });
 
+function animatePress(currentColor) {
+    $("#" + currentColor).addClass("pressed");
+    setTimeout(function() {
+        $("#" + currentColor).removeClass("pressed");
+    }, 100);
+};
+
+function playSound(name) {
+    const audio = new Audio("assets/audio/" + name + ".mp3");
+    audio.play();
+};
+
 function nextSequence() {
     clickedPattern = [];
     level++;
@@ -93,14 +105,6 @@ function nextSequence() {
         $("#" + randomButton).fadeIn(100).fadeOut(100).fadeIn(100);
         playSound(randomButton);
     }, 500)
-};
-
-function playSound(name) {
-    const audio = new Audio("assets/audio/" + name + ".mp3");
-    audio.play();
-
-    const newAudio = new Audio("assets/audio/" + name + ".mp3");
-    newAudio.play();
 };
 
 // Checks index and length of every color within two patterns and starts next round or game over
@@ -167,9 +171,4 @@ function restart() {
         }, 3000);
 };
 
-function animatePress(currentColor) {
-    $("#" + currentColor).addClass("pressed");
-    setTimeout(function() {
-        $("#" + currentColor).removeClass("pressed");
-    }, 100);
-};
+
