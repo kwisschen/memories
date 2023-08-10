@@ -25,7 +25,7 @@ $(document).ready(function() {
             opacity: 1
           });
     }, 1500);
-    const bgm = new Audio("assets/sounds/acoustic.mp3");
+    const bgm = new Audio("assets/audio/upbeat-guitar.mp3");
     bgm.loop = true;
     $("#bgm").click(function() {
         if (!bgmStarted) {
@@ -44,10 +44,10 @@ $(document).ready(function() {
     $(document).on("keydown", function(event) {
         if (event.key === " " && level === 0) {
             if (!gameStarted) {
-                $("#level-title").text("Let's go!");
+                $("#level-title").text("Click every button in the correct order!");
                 setTimeout(function() {
                     nextSequence();
-                }, 1000)
+                }, 2000)
                 gameStarted = true;
             }
         }
@@ -96,8 +96,11 @@ function nextSequence() {
 };
 
 function playSound(name) {
-    const audio = new Audio("assets/sounds/" + name + ".mp3");
+    const audio = new Audio("assets/audio/" + name + ".mp3");
     audio.play();
+
+    const newAudio = new Audio("assets/audio/" + name + ".mp3");
+    newAudio.play();
 };
 
 // Checks index and length of every color within two patterns and starts next round or game over
@@ -105,7 +108,7 @@ function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
         console.log("Success")
         if (clickedPattern.length === gamePattern.length) {
-            const next = new Audio("assets/sounds/next.mp3");
+            const next = new Audio("assets/audio/next.mp3");
             next.play();
             setTimeout(function() {
                 if (gameStarted) {
@@ -134,7 +137,7 @@ function checkAnswer(currentLevel) {
             default:
                 message = "Game over. <br>Let's give it another shot!";
         }
-        const wrong = new Audio("assets/sounds/uh-oh.mp3");
+        const wrong = new Audio("assets/audio/uh-oh.mp3");
         wrong.play();
         gameStarted = false;
         $("body").addClass("game-over");
@@ -142,9 +145,19 @@ function checkAnswer(currentLevel) {
             $("body").removeClass("game-over");
         }, 200);
         $("h2").html(message);
+        playBackAnswer(gamePattern, 0);
         restart();
     }
 };
+
+function playBackAnswer(pattern, index) {
+    if (index < pattern.length) {
+        setTimeout(function() {
+            playSound(pattern[index]);
+            playBackAnswer(pattern, index + 1);
+        }, 400);
+    }
+}
 
 function restart() {
     setTimeout(function() {
