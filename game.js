@@ -58,10 +58,10 @@ $(document).ready(function() {
 
         if (timeSinceLastTap < 300) {
             if (!gameStarted && level === 0) {
-                $("#level-title").text("Let's go!");
+                $("#level-title").text("Click every button in the correct order!");
                 setTimeout(function() {
                     nextSequence();
-                }, 1000)
+                }, 2000)
                 gameStarted = true;
             }
         }
