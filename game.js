@@ -11,7 +11,7 @@ $(document).ready(function() {
     $("h1").addClass("h1-flash");
     setTimeout(function() {
         $("h1").removeClass("h1-flash");
-        $("#bgm").toggleClass("flipped");
+        $("#bgm").toggleClass("first-flip");
     }, 1000);
     setTimeout(function() {
         $("h3").css({
@@ -127,13 +127,13 @@ function checkAnswer(currentLevel) {
 
         switch (true) {
             case level > 15:
-                message = "Game over. <br>Hmm...I'm pretty sure you have a photographic memory, calling the FBI...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)";
+                message = "Game over. <br>Hmm...I think you might have a photographic memory, calling the FBI now...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)";
                 break;
             case level > 10:
                 message = "Game over. <br>You are a magnificent unicorn, glistening in the morning sun!";
                 break;
             case level > 6:
-                message = "Game over. <br>...but Wow! You were amazing!";
+                message = "Game over. <br>...but WOW you were amazing!";
                 break;
             case level > 3:
                 message = "Game over. <br>Not bad at all, but we can do even better!";
