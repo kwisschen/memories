@@ -7,24 +7,25 @@ let lastTapTime = 0;
 let level = 0;
 
 $(document).ready(function() {
-    console.log("doc ready");
-    $("h1").addClass("h1-flash");
+    $("h1").addClass("showtime");
     setTimeout(function() {
-        $("h1").removeClass("h1-flash");
-        $("#bgm").toggleClass("first-flip");
-    }, 1000);
+        $("h1").removeClass("showtime");
+        $("#bgm").addClass("first-flip");
+    }, 1200);
     setTimeout(function() {
         $("h3").css({
             transform: 'translateX(0)',
-            opacity: 1
+            opacity: 1,
             });
-    }, 1000);
+    }, 1200);
     setTimeout(function() {
         $("#level-title").css({
             transform: 'translateY(0)',
             opacity: 1
           });
-    }, 1500);
+        $("#bgm").removeClass("first-flip");
+        $("#bgm img").removeClass("reversed");
+    }, 1800);
     const bgm = new Audio("assets/audio/upbeat-guitar.mp3");
     bgm.loop = true;
     $("#bgm").click(function() {
@@ -32,19 +33,21 @@ $(document).ready(function() {
             bgmStarted = true;
             bgm.play();
             $("#bgm").html("<img src='assets/images/music-off.png' alt='turn off music'>");
+            $("#bgm").toggleClass("reversed");
         }
         else if (bgmStarted) {
             bgmStarted = false;
             bgm.pause();
             bgm.currentTime = 0;
             $("#bgm").html("<img src='assets/images/music-on.png' alt='turn on music'>");
+            $("#bgm").toggleClass("reversed");
         }
         $(this).blur();
     });
     $(document).on("keydown", function(event) {
         if (event.key === " " && level === 0) {
             if (!gameStarted) {
-                $("#level-title").text("Click every button in the correct order!");
+                $("#level-title").text("Click every given button in the correct order!");
                 setTimeout(function() {
                     nextSequence();
                 }, 2000)
@@ -58,7 +61,7 @@ $(document).ready(function() {
 
         if (timeSinceLastTap < 300) {
             if (!gameStarted && level === 0) {
-                $("#level-title").text("Click every button in the correct order!");
+                $("#level-title").text("Click every given button in the correct order!");
                 setTimeout(function() {
                     nextSequence();
                 }, 2000)
@@ -76,10 +79,6 @@ $(document).ready(function() {
             checkAnswer(clickedPattern.length - 1);
         } 
     });
-
-    $("#bgm").on("click", function() {
-        $(this).toggleClass("flipped");
-      });
 });
 
 function animatePress(currentColor) {
@@ -110,7 +109,6 @@ function nextSequence() {
 // Checks index and length of every color within two patterns and starts next round or game over
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
-        console.log("Success")
         if (clickedPattern.length === gamePattern.length) {
             const next = new Audio("assets/audio/next.mp3");
             next.play();
@@ -119,7 +117,6 @@ function checkAnswer(currentLevel) {
                     nextSequence();
                 }
             }, 1500)
-            console.log("Next round")
         }
     }
     else {
@@ -127,16 +124,16 @@ function checkAnswer(currentLevel) {
 
         switch (true) {
             case level > 15:
-                message = "Game over. <br>Hmm...I think you might have a photographic memory, calling the FBI now...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)";
+                message = "Game over. <br>Hmm...I think you might have a photographic memory, calling the FBI...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)";
                 break;
             case level > 10:
                 message = "Game over. <br>You are a magnificent unicorn, glistening in the morning sun!";
                 break;
             case level > 6:
-                message = "Game over. <br>...but WOW you were amazing!";
+                message = "Game over. <br>Wow you were amazing!";
                 break;
             case level > 3:
-                message = "Game over. <br>Not bad at all, but we can do even better!";
+                message = "Game over. <br>Not bad at all!";
                 break;
             default:
                 message = "Game over. <br>Let's give it another shot!";

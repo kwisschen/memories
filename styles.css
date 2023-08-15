@@ -52,18 +52,17 @@ footer {
   box-shadow: 5px 5px #000;
 }
 
-#bgm.flipped {
-  transform: rotateY(180deg);
-}
-
-#bgm.first-flip {
+.first-flip {
   transform: rotateY(540deg);
 }
 
 #bgm img {
-  transform: scaleX(-1);
   padding: 0.5rem;
   height: 2.5rem;
+}
+
+.reversed {
+  transform: scaleX(-1);
 }
 
 h1 {
@@ -73,20 +72,18 @@ h1 {
   font-weight: 900;
   text-shadow: 10px 0 #000;
   animation: glow 1s ease-in-out infinite alternate;
-
 }
 
 @keyframes glow {
   from {
     text-shadow: 0 0 10px #fff, 0 0 20px #000, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
   }
-  
   to {
     text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
   }
 }
 
-.h1-flash {
+.showtime {
   font-size: 6.5rem;
   color: #000;
   font-family: 'Pacifico', cursive;
@@ -194,7 +191,6 @@ h3 {
     margin: 20px auto;
   }
 }
-
 /* For putting images on either side of header */
 /* #header::before,
 #header::after {
