@@ -69,7 +69,7 @@ $(document).ready(function() {
         const currentTime = new Date().getTime();
         const timeSinceLastTap = currentTime - lastTapTime;
 
-        if (timeSinceLastTap < 300) {
+        if (timeSinceLastTap < 300 && !$(event.target).hasClass("btn")) {
             if (!gameStarted && level === 0) {
                 $("#level-title").text("Click every given button in the correct order!");
                 setTimeout(function() {
