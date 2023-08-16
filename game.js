@@ -106,7 +106,7 @@ function nextSequence() {
     }, 500)
 };
 
-// Checks index and length of every color within two patterns and starts next round or game over
+// Checks index and length of every color within two patterns and starts next round or GAME OVER
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
         if (clickedPattern.length === gamePattern.length) {
@@ -124,19 +124,19 @@ function checkAnswer(currentLevel) {
 
         switch (true) {
             case level > 15:
-                message = "Game over. <br>Hmm...I think you might have a photographic memory, calling the FBI...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)";
+                message = "GAME OVER <br>Hmm...I think you might have a photographic memory, calling the FBI...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)<br><img src='assets/images/gator.jpeg' class='game-image' alt='FBI gators'>";
                 break;
             case level > 10:
-                message = "Game over. <br>You are a magnificent unicorn, glistening in the morning sun!";
+                message = "GAME OVER <br>You are a magnificent unicorn, glistening in the morning sun!";
                 break;
             case level > 6:
-                message = "Game over. <br>Wow you were amazing!";
+                message = "GAME OVER <br>Wow that was amazing!";
                 break;
             case level > 3:
-                message = "Game over. <br>Not bad at all!";
+                message = "GAME OVER <br>Not bad at all!";
                 break;
             default:
-                message = "Game over. <br>Let's give it another shot!";
+                message = "GAME OVER <br>Let's give it another shot!";
         }
         const wrong = new Audio("assets/audio/uh-oh.mp3");
         wrong.play();
