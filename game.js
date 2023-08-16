@@ -14,7 +14,7 @@ $(document).ready(function() {
         const audio = new Audio("assets/audio/" + name + ".mp3");
         audio.preload = "auto";
         if (name === "upbeat-guitar") {
-            audio.loop = true; // Set loop attribute for upbeat-guitar
+            audio.loop = true;
         }
         audioElements[name] = audio; // Store the preloaded Audio object
     });
@@ -94,8 +94,8 @@ $(document).ready(function() {
 
 function playSound(name) {
     if (audioElements[name]) {
-        audioElements[name].currentTime = 0;
         audioElements[name].play();
+        audioElements[name].currentTime = 0;
     } else {
         console.error("Audio not preloaded:", name);
     }
@@ -138,7 +138,7 @@ function restart() {
         }, 3000);
 };
 
-// Checks index and length of every color within two patterns and starts next round or GAME OVER
+// Checks index and length of every color within two patterns and starts next round or game over
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
         if (clickedPattern.length === gamePattern.length) {
