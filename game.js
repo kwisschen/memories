@@ -27,6 +27,7 @@ $(document).ready(function() {
         $("#bgm img").removeClass("reversed");
     }, 1800);
     const bgm = new Audio("assets/audio/upbeat-guitar.mp3");
+    bgm.preload = "auto";
     bgm.loop = true;
     $("#bgm").click(function() {
         if (!bgmStarted) {
@@ -79,6 +80,7 @@ $(document).ready(function() {
             checkAnswer(clickedPattern.length - 1);
         } 
     });
+
 });
 
 function animatePress(currentColor) {
@@ -90,6 +92,7 @@ function animatePress(currentColor) {
 
 function playSound(name) {
     const audio = new Audio("assets/audio/" + name + ".mp3");
+    audio.preload = "auto";
     audio.play();
 };
 
@@ -104,51 +107,6 @@ function nextSequence() {
         $("#" + randomButton).fadeIn(100).fadeOut(100).fadeIn(100);
         playSound(randomButton);
     }, 500)
-};
-
-// Checks index and length of every color within two patterns and starts next round or GAME OVER
-function checkAnswer(currentLevel) {
-    if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
-        if (clickedPattern.length === gamePattern.length) {
-            const next = new Audio("assets/audio/next.mp3");
-            next.play();
-            setTimeout(function() {
-                if (gameStarted) {
-                    nextSequence();
-                }
-            }, 1500)
-        }
-    }
-    else {
-        let message = "";
-
-        switch (true) {
-            case level > 15:
-                message = "GAME OVER <br>Hmm...I think you might have a photographic memory, calling the FBI...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)<br><img src='assets/images/gator.jpeg' class='game-image' alt='FBI gators'>";
-                break;
-            case level > 10:
-                message = "GAME OVER <br>You are a magnificent unicorn, glistening in the morning sun!";
-                break;
-            case level > 6:
-                message = "GAME OVER <br>Wow that was amazing!";
-                break;
-            case level > 3:
-                message = "GAME OVER <br>Not bad at all!";
-                break;
-            default:
-                message = "GAME OVER <br>Let's give it another shot!";
-        }
-        const wrong = new Audio("assets/audio/uh-oh.mp3");
-        wrong.play();
-        gameStarted = false;
-        $("body").addClass("game-over");
-        setTimeout(function() {
-            $("body").removeClass("game-over");
-        }, 200);
-        $("h2").html(message);
-        playBackAnswer(gamePattern, 0);
-        restart();
-    }
 };
 
 function playBackAnswer(pattern, index) {
@@ -166,6 +124,52 @@ function restart() {
         gamePattern = [];
         level = 0;
         }, 3000);
+};
+
+// Checks index and length of every color within two patterns and starts next round or GAME OVER
+function checkAnswer(currentLevel) {
+    if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
+        if (clickedPattern.length === gamePattern.length) {
+            const next = new Audio("assets/audio/next.mp3");
+            next.preload = "auto";
+            next.play();
+            setTimeout(function() {
+                if (gameStarted) {
+                    nextSequence();
+                }
+            }, 1500)
+        }
+    }
+    else {
+        let message = "";
+        switch (true) {
+            case level > 15:
+                message = "GAME OVER <br>Hmm...I think you might have a photographic memory, calling the FBI...<br>(the <strong>F</strong>unny <strong>B</strong>unny <strong>I</strong>nvesti-gators!)<br><img src='assets/images/gator.jpeg' class='game-image' alt='FBI gators'>";
+                break;
+            case level > 10:
+                message = "GAME OVER <br>You are a magnificent unicorn, glistening in the morning sun!";
+                break;
+            case level > 6:
+                message = "GAME OVER <br>Wow that was amazing!";
+                break;
+            case level > 3:
+                message = "GAME OVER <br>Not bad at all!";
+                break;
+            default:
+                message = "GAME OVER <br>Let's give it another shot!";
+        }
+        const wrong = new Audio("assets/audio/uh-oh.mp3");
+        wrong.preload = "auto";
+        wrong.play();
+        gameStarted = false;
+        $("body").addClass("game-over");
+        setTimeout(function() {
+            $("body").removeClass("game-over");
+        }, 200);
+        $("h2").html(message);
+        playBackAnswer(gamePattern, 0);
+        restart();
+    }
 };
 
 
