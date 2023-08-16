@@ -6,7 +6,18 @@ let bgmStarted = false;
 let lastTapTime = 0;
 let level = 0;
 
+const audioElements = {};
+const audioFiles = ["red", "green", "blue", "yellow", "uh-oh", "next", "upbeat-guitar",];
+
 $(document).ready(function() {
+    audioFiles.forEach(function(name) {
+        const audio = new Audio("assets/audio/" + name + ".mp3");
+        audio.preload = "auto";
+        if (name === "upbeat-guitar") {
+            audio.loop = true; // Set loop attribute for upbeat-guitar
+        }
+        audioElements[name] = audio; // Store the preloaded Audio object
+    });
     $("h1").addClass("showtime");
     setTimeout(function() {
         $("h1").removeClass("showtime");
@@ -26,13 +37,11 @@ $(document).ready(function() {
         $("#bgm").removeClass("first-flip");
         $("#bgm img").removeClass("reversed");
     }, 1800);
-    const bgm = new Audio("assets/audio/upbeat-guitar.mp3");
-    bgm.preload = "auto";
-    bgm.loop = true;
+
     $("#bgm").click(function() {
         if (!bgmStarted) {
             bgmStarted = true;
-            bgm.play();
+            playSound("upbeat-guitar");
             $("#bgm").html("<img src='assets/images/music-off.png' alt='turn off music'>");
             $("#bgm").toggleClass("reversed");
         }
@@ -83,17 +92,20 @@ $(document).ready(function() {
 
 });
 
+function playSound(name) {
+    if (audioElements[name]) {
+        audioElements[name].currentTime = 0;
+        audioElements[name].play();
+    } else {
+        console.error("Audio not preloaded:", name);
+    }
+}
+
 function animatePress(currentColor) {
     $("#" + currentColor).addClass("pressed");
     setTimeout(function() {
         $("#" + currentColor).removeClass("pressed");
     }, 100);
-};
-
-function playSound(name) {
-    const audio = new Audio("assets/audio/" + name + ".mp3");
-    audio.preload = "auto";
-    audio.play();
 };
 
 function nextSequence() {
@@ -130,9 +142,7 @@ function restart() {
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === clickedPattern[currentLevel]) {
         if (clickedPattern.length === gamePattern.length) {
-            const next = new Audio("assets/audio/next.mp3");
-            next.preload = "auto";
-            next.play();
+            playSound("next");
             setTimeout(function() {
                 if (gameStarted) {
                     nextSequence();
@@ -158,9 +168,7 @@ function checkAnswer(currentLevel) {
             default:
                 message = "GAME OVER <br>Let's give it another shot!";
         }
-        const wrong = new Audio("assets/audio/uh-oh.mp3");
-        wrong.preload = "auto";
-        wrong.play();
+        playSound("uh-oh");
         gameStarted = false;
         $("body").addClass("game-over");
         setTimeout(function() {
