@@ -5,7 +5,7 @@ let gameStarted = false;
 let bgmStarted = false;
 let lastTapTime = 0;
 let level = 0;
-
+const doubleTap = 300;
 const audioElements = {};
 const audioFiles = ["red", "green", "blue", "yellow", "uh-oh", "next", "upbeat-guitar",];
 
@@ -47,8 +47,7 @@ $(document).ready(function() {
         }
         else if (bgmStarted) {
             bgmStarted = false;
-            bgm.pause();
-            bgm.currentTime = 0;
+            audioElements["upbeat-guitar"].pause();
             $("#bgm").html("<img src='assets/images/music-on.png' alt='turn on music'>");
             $("#bgm").toggleClass("reversed");
         }
@@ -65,17 +64,24 @@ $(document).ready(function() {
             }
         }
     });
-    $(document).on("touchstart", function(event) {
+    $("#main").on("touchstart", function(event) {
         const currentTime = new Date().getTime();
         const timeSinceLastTap = currentTime - lastTapTime;
 
-        if (timeSinceLastTap < 300 && !$(event.target).hasClass("btn")) {
+        // Prevent touch event from affecting other elements
+        event.stopPropagation();
+
+        if (timeSinceLastTap < doubleTap) {
             if (!gameStarted && level === 0) {
-                $("#level-title").text("Click every given button in the correct order!");
-                setTimeout(function() {
-                    nextSequence();
-                }, 2000)
-                gameStarted = true;
+                // Check if the target element is a button
+                const isButton = $(event.target).hasClass("btn");
+                if (!isButton) {
+                    $("#level-title").text("Click every given button in the correct order!");
+                    setTimeout(function() {
+                        nextSequence();
+                    }, 2000);
+                    gameStarted = true;
+                }
             }
         }
         lastTapTime = currentTime;
@@ -94,8 +100,8 @@ $(document).ready(function() {
 
 function playSound(name) {
     if (audioElements[name]) {
-        audioElements[name].play();
         audioElements[name].currentTime = 0;
+        audioElements[name].play();
     } else {
         console.error("Audio not preloaded:", name);
     }
@@ -114,11 +120,13 @@ function nextSequence() {
     const randomNumber = Math.floor(Math.random() * 4);
     const randomButton = buttonColors[randomNumber];
     gamePattern.push(randomButton);
-    $("#level-title").text("Level " + level);
-    setTimeout(function() {
-        $("#" + randomButton).fadeIn(100).fadeOut(100).fadeIn(100);
-        playSound(randomButton);
-    }, 500)
+    if (gameStarted) {
+        $("#level-title").text("Level " + level);
+        setTimeout(function() {
+            $("#" + randomButton).fadeIn(100).fadeOut(100).fadeIn(100);
+            playSound(randomButton);
+        }, 500)
+    }
 };
 
 function playBackAnswer(pattern, index) {
@@ -179,5 +187,3 @@ function checkAnswer(currentLevel) {
         restart();
     }
 };
-
-
